@@ -15,565 +15,195 @@
   --accent: #00c2ff;
   --accent2: #ff4ecd;
   --accent3: #ffcc00;
-  
   --text: #f0f4ff;
   --muted: rgba(240,244,255,0.5);
   --card-r: 18px;
   --nav-h: 76px;
 }
-
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-
-body{
-  font-family:'DM Sans',sans-serif;
-  background:var(--bg);
-  color:var(--text);
-  overflow-x:hidden;
-  cursor:none;
-}
-
-/* CUSTOM CURSOR */
-#cursor{
-  position:fixed;width:12px;height:12px;
-  background:var(--accent);
-  border-radius:50%;pointer-events:none;z-index:99999;
-  transform:translate(-50%,-50%);
-  transition:width .2s,height .2s,background .2s;
-  mix-blend-mode:screen;
-}
-#cursor-ring{
-  position:fixed;width:38px;height:38px;
-  border:1.5px solid rgba(0,194,255,0.5);
-  border-radius:50%;pointer-events:none;z-index:99998;
-  transform:translate(-50%,-50%);
-  transition:transform .12s ease,width .2s,height .2s;
-}
-body:hover #cursor{background:var(--accent)}
-
-/* BG LAYERS */
-body::before{
-  content:'';position:fixed;inset:0;
-  background:
-    radial-gradient(ellipse 70% 50% at 10% 20%, rgba(0,194,255,0.07) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 40% at 85% 70%, rgba(255,78,205,0.07) 0%, transparent 60%),
-    radial-gradient(ellipse 40% 30% at 50% 50%, rgba(0,194,255,0.03) 0%, transparent 70%);
-  z-index:0;pointer-events:none;
-}
-
-/* GRAIN */
-body::after{
-  content:'';position:fixed;inset:0;z-index:1;pointer-events:none;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-  opacity:.4;
-}
-
-/* ─── NAVBAR ─── */
-.navbar{
-  position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:9000;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 3rem;
-  background:transparent;
-  transition:background .4s,backdrop-filter .4s,border-color .4s;
-  border-bottom:1px solid transparent;
-}
-.navbar.scrolled{
-  background:rgba(5,6,15,0.92);
-  backdrop-filter:blur(32px) saturate(180%);
-  border-bottom:1px solid var(--border);
-}
-
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;cursor:none;}
+#cursor{position:fixed;width:12px;height:12px;background:var(--accent);border-radius:50%;pointer-events:none;z-index:99999;transform:translate(-50%,-50%);transition:width .2s,height .2s,background .2s;mix-blend-mode:screen;}
+#cursor-ring{position:fixed;width:38px;height:38px;border:1.5px solid rgba(0,194,255,0.5);border-radius:50%;pointer-events:none;z-index:99998;transform:translate(-50%,-50%);transition:transform .12s ease,width .2s,height .2s;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 70% 50% at 10% 20%, rgba(0,194,255,0.07) 0%, transparent 60%),radial-gradient(ellipse 60% 40% at 85% 70%, rgba(255,78,205,0.07) 0%, transparent 60%),radial-gradient(ellipse 40% 30% at 50% 50%, rgba(0,194,255,0.03) 0%, transparent 70%);z-index:0;pointer-events:none;}
+body::after{content:'';position:fixed;inset:0;z-index:1;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");opacity:.4;}
+.navbar{position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:9000;display:flex;align-items:center;justify-content:space-between;padding:0 3rem;background:transparent;transition:background .4s,backdrop-filter .4s,border-color .4s;border-bottom:1px solid transparent;}
+.navbar.scrolled{background:rgba(5,6,15,0.92);backdrop-filter:blur(32px) saturate(180%);border-bottom:1px solid var(--border);}
 .nav-left,.nav-right{display:flex;align-items:center;gap:1.5rem}
-
-.logo{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:2rem;letter-spacing:2px;
-  color:var(--text);text-decoration:none;
-  display:flex;align-items:center;gap:2px;
-}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:2px;color:var(--text);text-decoration:none;display:flex;align-items:center;gap:2px;cursor:pointer;}
 .logo em{color:var(--accent);font-style:normal}
-.logo-badge{
-  background:var(--accent);color:#05060f;
-  font-family:'DM Sans',sans-serif;
-  font-size:9px;font-weight:700;letter-spacing:1px;
-  padding:2px 6px;border-radius:4px;
-  align-self:flex-start;margin-top:4px;
-}
-
-/* NAV LINKS */
+.logo-badge{background:var(--accent);color:#05060f;font-family:'DM Sans',sans-serif;font-size:9px;font-weight:700;letter-spacing:1px;padding:2px 6px;border-radius:4px;align-self:flex-start;margin-top:4px;}
 .nav-links{display:flex;align-items:center;gap:4px}
-.nav-links a{
-  text-decoration:none;color:var(--muted);
-  font-size:14px;font-weight:500;
-  padding:8px 16px;border-radius:8px;
-  transition:color .2s,background .2s;
-  position:relative;
-}
+.nav-links a{text-decoration:none;color:var(--muted);font-size:14px;font-weight:500;padding:8px 16px;border-radius:8px;transition:color .2s,background .2s;position:relative;cursor:pointer;}
 .nav-links a:hover,.nav-links a.active{color:var(--text);background:var(--surface2)}
-.nav-links a.active::after{
-  content:'';position:absolute;bottom:4px;left:50%;transform:translateX(-50%);
-  width:20px;height:2px;background:var(--accent);border-radius:2px;
-}
-
-/* CATEGORY DROPDOWN */
-.category-btn{
-  display:flex;align-items:center;gap:6px;
-  background:var(--surface);border:1px solid var(--border);
-  color:var(--text);padding:8px 16px;border-radius:8px;
-  font-size:14px;font-weight:500;cursor:pointer;
-  transition:background .2s,border-color .2s;
-  font-family:'DM Sans',sans-serif;
-  position:relative;
-}
+.nav-links a.active::after{content:'';position:absolute;bottom:4px;left:50%;transform:translateX(-50%);width:20px;height:2px;background:var(--accent);border-radius:2px;}
+.category-btn{display:flex;align-items:center;gap:6px;background:var(--surface);border:1px solid var(--border);color:var(--text);padding:8px 16px;border-radius:8px;font-size:14px;font-weight:500;cursor:pointer;transition:background .2s,border-color .2s;font-family:'DM Sans',sans-serif;position:relative;}
 .category-btn:hover{background:var(--surface2);border-color:rgba(0,194,255,0.3)}
 .category-btn svg{width:14px;height:14px;fill:var(--muted);transition:transform .3s}
-.category-btn:hover svg{transform:rotate(180deg);fill:var(--accent)}
-
-.dropdown{
-  position:absolute;top:calc(100% + 10px);left:0;
-  background:rgba(10,12,25,0.97);
-  backdrop-filter:blur(40px);
-  border:1px solid var(--border);
-  border-radius:14px;padding:8px;
-  min-width:200px;
-  opacity:0;visibility:hidden;transform:translateY(-8px);
-  transition:all .25s cubic-bezier(.4,0,.2,1);
-  z-index:100;
-}
+.category-btn:hover svg:last-child{transform:rotate(180deg);fill:var(--accent)}
+.dropdown{position:absolute;top:calc(100% + 10px);left:0;background:rgba(10,12,25,0.97);backdrop-filter:blur(40px);border:1px solid var(--border);border-radius:14px;padding:8px;min-width:200px;opacity:0;visibility:hidden;transform:translateY(-8px);transition:all .25s cubic-bezier(.4,0,.2,1);z-index:100;}
 .category-btn:hover .dropdown{opacity:1;visibility:visible;transform:translateY(0)}
-.dropdown a{
-  display:flex;align-items:center;gap:10px;
-  padding:10px 14px;border-radius:8px;
-  color:var(--muted);font-size:13px;font-weight:500;
-  text-decoration:none;transition:all .2s;
-}
+.dropdown a{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:8px;color:var(--muted);font-size:13px;font-weight:500;text-decoration:none;transition:all .2s;cursor:pointer;}
 .dropdown a:hover{color:var(--text);background:var(--surface2)}
 .dropdown a span{font-size:16px}
-
-/* SEARCH */
-.search-wrap{
-  display:flex;align-items:center;
-  background:var(--surface);border:1px solid var(--border);
-  border-radius:10px;padding:8px 14px;gap:8px;
-  transition:all .3s;width:220px;
-}
-.search-wrap:focus-within{
-  width:300px;border-color:rgba(0,194,255,0.5);
-  background:var(--surface2);
-  box-shadow:0 0 0 3px rgba(0,194,255,0.1);
-}
+.search-wrap{display:flex;align-items:center;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:8px 14px;gap:8px;transition:all .3s;width:220px;position:relative;}
+.search-wrap:focus-within{width:300px;border-color:rgba(0,194,255,0.5);background:var(--surface2);box-shadow:0 0 0 3px rgba(0,194,255,0.1);}
 .search-wrap svg{width:16px;fill:var(--muted);flex-shrink:0}
 .search-wrap:focus-within svg{fill:var(--accent)}
-.search-wrap input{
-  background:none;border:none;outline:none;
-  color:var(--text);font-size:13px;width:100%;
-  font-family:'DM Sans',sans-serif;
-}
+.search-wrap input{background:none;border:none;outline:none;color:var(--text);font-size:13px;width:100%;font-family:'DM Sans',sans-serif;}
 .search-wrap input::placeholder{color:var(--muted)}
-
-/* NAV ICONS */
-.nav-icon-btn{
-  width:38px;height:38px;
-  display:flex;align-items:center;justify-content:center;
-  background:var(--surface);border:1px solid var(--border);
-  border-radius:10px;cursor:pointer;
-  transition:all .2s;position:relative;
-}
+.nav-icon-btn{width:38px;height:38px;display:flex;align-items:center;justify-content:center;background:var(--surface);border:1px solid var(--border);border-radius:10px;cursor:pointer;transition:all .2s;position:relative;}
 .nav-icon-btn:hover{background:var(--surface2);border-color:rgba(0,194,255,0.4)}
 .nav-icon-btn svg{width:18px;height:18px;fill:var(--muted)}
 .nav-icon-btn:hover svg{fill:var(--accent)}
-.notif-badge{
-  position:absolute;top:-3px;right:-3px;
-  width:16px;height:16px;background:var(--accent2);
-  border-radius:50%;font-size:9px;font-weight:700;
-  display:flex;align-items:center;justify-content:center;
-  color:#fff;border:2px solid var(--bg);
-}
-
-/* PROFILE */
-.profile-btn{
-  display:flex;align-items:center;gap:10px;
-  background:var(--surface);border:1px solid var(--border);
-  border-radius:12px;padding:6px 14px 6px 8px;
-  cursor:pointer;transition:all .2s;position:relative;
-}
+.notif-badge{position:absolute;top:-3px;right:-3px;min-width:16px;height:16px;background:var(--accent2);border-radius:50%;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;color:#fff;border:2px solid var(--bg);padding:0 3px;}
+.notif-badge.hidden{display:none}
+.profile-btn{display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:6px 14px 6px 8px;cursor:pointer;transition:all .2s;position:relative;}
 .profile-btn:hover{background:var(--surface2);border-color:rgba(0,194,255,0.4)}
-.profile-avatar{
-  width:30px;height:30px;border-radius:8px;
-  background:linear-gradient(135deg,var(--accent),var(--accent2));
-  display:flex;align-items:center;justify-content:center;
-  font-size:13px;font-weight:700;color:#05060f;
-  font-family:'Bebas Neue',sans-serif;letter-spacing:1px;
-}
-.profile-name{font-size:13px;font-weight:500}
-.profile-dropdown{
-  position:absolute;top:calc(100% + 10px);right:0;
-  background:rgba(10,12,25,0.97);backdrop-filter:blur(40px);
-  border:1px solid var(--border);border-radius:14px;padding:8px;
-  min-width:200px;
-  opacity:0;visibility:hidden;transform:translateY(-8px);
-  transition:all .25s;z-index:100;
-}
+.profile-avatar{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#05060f;font-family:'Bebas Neue',sans-serif;letter-spacing:1px;flex-shrink:0;}
+.profile-name{font-size:13px;font-weight:500;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.profile-dropdown{position:absolute;top:calc(100% + 10px);right:0;background:rgba(10,12,25,0.97);backdrop-filter:blur(40px);border:1px solid var(--border);border-radius:14px;padding:8px;min-width:200px;opacity:0;visibility:hidden;transform:translateY(-8px);transition:all .25s;z-index:100;}
 .profile-btn:hover .profile-dropdown{opacity:1;visibility:visible;transform:translateY(0)}
-.profile-dropdown a{
-  display:flex;align-items:center;gap:10px;
-  padding:10px 14px;border-radius:8px;
-  color:var(--muted);font-size:13px;text-decoration:none;
-  transition:all .2s;
-}
+.profile-dropdown a{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:8px;color:var(--muted);font-size:13px;text-decoration:none;transition:all .2s;cursor:pointer;}
 .profile-dropdown a:hover{color:var(--text);background:var(--surface2)}
 .profile-dropdown a span{font-size:16px}
 .profile-dropdown hr{border:none;border-top:1px solid var(--border);margin:4px 0}
-
-/* JOIN BTN */
-.btn-prime{
-  background:linear-gradient(135deg,var(--accent),#0077aa);
-  color:#05060f;font-weight:700;font-size:13px;
-  padding:9px 20px;border-radius:10px;border:none;
-  cursor:pointer;transition:all .3s;
-  font-family:'DM Sans',sans-serif;letter-spacing:.3px;
-  white-space:nowrap;
-}
+.btn-prime{background:linear-gradient(135deg,var(--accent),#0077aa);color:#05060f;font-weight:700;font-size:13px;padding:9px 20px;border-radius:10px;border:none;cursor:pointer;transition:all .3s;font-family:'DM Sans',sans-serif;letter-spacing:.3px;white-space:nowrap;}
 .btn-prime:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(0,194,255,0.35)}
-
-/* ─── HERO CAROUSEL ─── */
-.hero{
-  position:relative;height:100vh;overflow:hidden;
-}
-.hero-slider{
-  display:flex;height:100%;
-  transition:transform 1s cubic-bezier(.77,0,.175,1);
-}
-.hero-slide{
-  flex:0 0 100%;position:relative;overflow:hidden;
-  background-size:cover;background-position:center;
-}
-.hero-slide img.slide-bg{
-  position:absolute;inset:0;
-  width:100%;height:100%;object-fit:cover;
-  transform:scale(1.06);
-  transition:transform 8s ease;
-  filter:brightness(.55) saturate(1.2);
-}
+.btn-prime.is-member{background:linear-gradient(135deg,#2bd66f,#11804a)}
+.hero{position:relative;height:100vh;overflow:hidden;}
+.hero-slider{display:flex;height:100%;transition:transform 1s cubic-bezier(.77,0,.175,1);}
+.hero-slide{flex:0 0 100%;position:relative;overflow:hidden;}
+.hero-slide img.slide-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.06);transition:transform 8s ease;filter:brightness(.55) saturate(1.2);}
 .hero-slide.active img.slide-bg{transform:scale(1)}
-.hero-slide::after{
-  content:'';position:absolute;inset:0;
-  background:linear-gradient(105deg,rgba(5,6,15,.98) 0%,rgba(5,6,15,.75) 35%,rgba(5,6,15,.3) 65%,transparent 100%),
-             linear-gradient(0deg,rgba(5,6,15,.9) 0%,transparent 40%);
-  z-index:1;
-}
-
-.hero-content{
-  position:absolute;z-index:2;
-  bottom:18%;left:5%;max-width:700px;
-}
-.hero-badge{
-  display:inline-flex;align-items:center;gap:8px;
-  background:rgba(0,194,255,0.12);border:1px solid rgba(0,194,255,0.3);
-  border-radius:6px;padding:5px 12px;
-  font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;
-  color:var(--accent);margin-bottom:20px;
-  backdrop-filter:blur(8px);
-}
+.hero-slide::after{content:'';position:absolute;inset:0;background:linear-gradient(105deg,rgba(5,6,15,.98) 0%,rgba(5,6,15,.75) 35%,rgba(5,6,15,.3) 65%,transparent 100%),linear-gradient(0deg,rgba(5,6,15,.9) 0%,transparent 40%);z-index:1;}
+.hero-content{position:absolute;z-index:2;bottom:18%;left:5%;max-width:700px;}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(0,194,255,0.12);border:1px solid rgba(0,194,255,0.3);border-radius:6px;padding:5px 12px;font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:20px;backdrop-filter:blur(8px);}
 .hero-badge::before{content:'▶';font-size:8px}
-
-.hero-title{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:clamp(64px,9vw,130px);
-  line-height:.92;letter-spacing:2px;
-  color:#fff;margin-bottom:20px;
-  text-shadow:0 4px 40px rgba(0,0,0,.6);
-}
-.hero-title em{
-  display:block;
-  background:linear-gradient(90deg,var(--accent),var(--accent2));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-  font-style:normal;
-}
-
-.hero-meta{
-  display:flex;align-items:center;gap:12px;flex-wrap:wrap;
-  margin-bottom:28px;font-size:13px;color:var(--muted);font-weight:500;
-}
-.hero-meta .pill{
-  background:var(--surface2);border:1px solid var(--border);
-  border-radius:6px;padding:4px 10px;color:var(--text);font-size:12px;
-}
+.hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(64px,9vw,130px);line-height:.92;letter-spacing:2px;color:#fff;margin-bottom:20px;text-shadow:0 4px 40px rgba(0,0,0,.6);}
+.hero-title em{display:block;background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-style:normal;}
+.hero-meta{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:28px;font-size:13px;color:var(--muted);font-weight:500;}
+.hero-meta .pill{background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:4px 10px;color:var(--text);font-size:12px;}
 .hero-meta .separator{opacity:.3}
-
-.hero-desc{
-  font-size:15px;color:var(--muted);line-height:1.7;
-  margin-bottom:32px;max-width:500px;
-}
-
+.hero-desc{font-size:15px;color:var(--muted);line-height:1.7;margin-bottom:32px;max-width:500px;}
 .hero-actions{display:flex;gap:12px;align-items:center}
-.btn-watch{
-  display:flex;align-items:center;gap:10px;
-  background:var(--accent);color:#05060f;
-  font-weight:700;font-size:14px;letter-spacing:.5px;
-  padding:14px 28px;border-radius:12px;border:none;
-  cursor:pointer;transition:all .3s;
-  font-family:'DM Sans',sans-serif;
-}
+.btn-watch{display:flex;align-items:center;gap:10px;background:var(--accent);color:#05060f;font-weight:700;font-size:14px;letter-spacing:.5px;padding:14px 28px;border-radius:12px;border:none;cursor:pointer;transition:all .3s;font-family:'DM Sans',sans-serif;}
 .btn-watch:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(0,194,255,.4);background:#1ae0ff}
 .btn-watch svg{width:18px;height:18px;fill:#05060f}
-
-.btn-more{
-  display:flex;align-items:center;gap:8px;
-  background:var(--surface2);color:var(--text);
-  font-weight:600;font-size:14px;
-  padding:14px 24px;border-radius:12px;border:1px solid var(--border);
-  cursor:pointer;transition:all .3s;font-family:'DM Sans',sans-serif;
-}
+.btn-more{display:flex;align-items:center;gap:8px;background:var(--surface2);color:var(--text);font-weight:600;font-size:14px;padding:14px 24px;border-radius:12px;border:1px solid var(--border);cursor:pointer;transition:all .3s;font-family:'DM Sans',sans-serif;}
 .btn-more:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2)}
-
-/* HERO CONTROLS */
-.hero-controls{
-  position:absolute;bottom:6%;left:50%;transform:translateX(-50%);
-  z-index:10;display:flex;align-items:center;gap:16px;
-}
-.hero-dot{
-  width:32px;height:3px;background:rgba(255,255,255,0.25);
-  border-radius:3px;cursor:pointer;transition:all .4s;
-}
+.btn-more.active{background:var(--accent);color:#05060f;border-color:var(--accent)}
+.hero-controls{position:absolute;bottom:6%;left:50%;transform:translateX(-50%);z-index:10;display:flex;align-items:center;gap:16px;}
+.hero-dot{width:32px;height:3px;background:rgba(255,255,255,0.25);border-radius:3px;cursor:pointer;transition:all .4s;}
 .hero-dot.active{width:56px;background:var(--accent)}
 .hero-dot:hover{background:rgba(255,255,255,0.5)}
-
-.hero-arrows{
-  position:absolute;right:4%;top:50%;transform:translateY(-50%);
-  z-index:10;display:flex;flex-direction:column;gap:8px;
-}
-.hero-arr{
-  width:44px;height:44px;border-radius:10px;
-  background:var(--surface);border:1px solid var(--border);
-  display:flex;align-items:center;justify-content:center;
-  cursor:pointer;transition:all .25s;backdrop-filter:blur(16px);
-}
+.hero-arrows{position:absolute;right:4%;top:50%;transform:translateY(-50%);z-index:10;display:flex;flex-direction:column;gap:8px;}
+.hero-arr{width:44px;height:44px;border-radius:10px;background:var(--surface);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .25s;backdrop-filter:blur(16px);}
 .hero-arr:hover{background:var(--accent);border-color:var(--accent)}
 .hero-arr svg{width:18px;height:18px;fill:var(--text)}
 .hero-arr:hover svg{fill:#05060f}
-
-/* SLIDE COUNTER */
-.slide-counter{
-  position:absolute;right:4%;bottom:6%;z-index:10;
-  font-family:'Bebas Neue',sans-serif;font-size:36px;
-  color:rgba(255,255,255,.15);letter-spacing:2px;
-}
+.slide-counter{position:absolute;right:4%;bottom:6%;z-index:10;font-family:'Bebas Neue',sans-serif;font-size:36px;color:rgba(255,255,255,.15);letter-spacing:2px;}
 .slide-counter b{color:var(--text);font-size:48px}
-
-/* ─── CATEGORIES BAR ─── */
-.cat-bar{
-  padding:32px 5% 0;
-  display:flex;align-items:center;gap:10px;
-  overflow-x:auto;scrollbar-width:none;
-  position:relative;z-index:2;
-}
+.cat-bar{padding:32px 5% 0;display:flex;align-items:center;gap:10px;overflow-x:auto;scrollbar-width:none;position:relative;z-index:2;}
 .cat-bar::-webkit-scrollbar{display:none}
-.cat-chip{
-  flex-shrink:0;padding:9px 20px;border-radius:30px;
-  background:var(--surface);border:1px solid var(--border);
-  color:var(--muted);font-size:13px;font-weight:500;
-  cursor:pointer;transition:all .25s;white-space:nowrap;
-}
+.cat-chip{flex-shrink:0;padding:9px 20px;border-radius:30px;background:var(--surface);border:1px solid var(--border);color:var(--muted);font-size:13px;font-weight:500;cursor:pointer;transition:all .25s;white-space:nowrap;}
 .cat-chip:hover{color:var(--text);background:var(--surface2)}
-.cat-chip.active{
-  color:#05060f;
-  background:var(--accent);
-  border-color:var(--accent);
-  box-shadow:0 6px 20px rgba(0,194,255,.3);
-}
-
-/* ─── SECTIONS ─── */
+.cat-chip.active{color:#05060f;background:var(--accent);border-color:var(--accent);box-shadow:0 6px 20px rgba(0,194,255,.3);}
 .container{padding:0 5% 5rem;position:relative;z-index:2}
-
 .section{margin-top:52px}
-.section-head{
-  display:flex;align-items:center;justify-content:space-between;
-  margin-bottom:20px;
-}
-.section-title{
-  font-family:'Bebas Neue',sans-serif;
-  font-size:26px;letter-spacing:2px;
-  display:flex;align-items:center;gap:12px;
-}
-.section-title .tag{
-  font-family:'DM Sans',sans-serif;
-  font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
-  background:rgba(255,78,205,0.15);border:1px solid rgba(255,78,205,0.3);
-  color:var(--accent2);padding:3px 8px;border-radius:4px;
-}
-.see-all{
-  color:var(--muted);font-size:13px;font-weight:500;
-  display:flex;align-items:center;gap:4px;cursor:pointer;
-  transition:color .2s;
-}
+.section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;}
+.section-title{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:2px;display:flex;align-items:center;gap:12px;}
+.section-title .tag{font-family:'DM Sans',sans-serif;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;background:rgba(255,78,205,0.15);border:1px solid rgba(255,78,205,0.3);color:var(--accent2);padding:3px 8px;border-radius:4px;}
+.see-all{color:var(--muted);font-size:13px;font-weight:500;display:flex;align-items:center;gap:4px;cursor:pointer;transition:color .2s;}
 .see-all:hover{color:var(--accent)}
 .see-all::after{content:'→';transition:transform .2s}
 .see-all:hover::after{transform:translateX(4px)}
-
-/* SCROLL ROW */
 .row-wrap{position:relative}
-.scroll-row{
-  display:flex;gap:14px;overflow-x:auto;
-  padding:4px 0 20px;
-  scrollbar-width:none;scroll-behavior:smooth;
-  scroll-snap-type:x mandatory;
-}
+.scroll-row{display:flex;gap:14px;overflow-x:auto;padding:4px 0 20px;scrollbar-width:none;scroll-behavior:smooth;scroll-snap-type:x mandatory;}
 .scroll-row::-webkit-scrollbar{display:none}
-
-.row-btn{
-  position:absolute;top:50%;transform:translateY(-60%);
-  width:42px;height:80px;
-  background:rgba(5,6,15,.85);backdrop-filter:blur(20px);
-  border:1px solid var(--border);
-  display:flex;align-items:center;justify-content:center;
-  cursor:pointer;z-index:20;
-  transition:all .25s;
-}
+.row-btn{position:absolute;top:50%;transform:translateY(-60%);width:42px;height:80px;background:rgba(5,6,15,.85);backdrop-filter:blur(20px);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:20;transition:all .25s;}
 .row-btn.prev{left:-20px;border-radius:0 10px 10px 0}
 .row-btn.next{right:-20px;border-radius:10px 0 0 10px}
 .row-btn:hover{background:rgba(0,194,255,.15);border-color:var(--accent)}
 .row-btn svg{width:16px;height:16px;fill:var(--text)}
 .row-btn:hover svg{fill:var(--accent)}
-
-/* ─── MOVIE CARDS ─── */
-.card{
-  flex:0 0 220px;border-radius:var(--card-r);
-  overflow:hidden;cursor:pointer;
-  position:relative;scroll-snap-align:start;
-  background:var(--surface);border:1px solid var(--border);
-  transition:transform .4s cubic-bezier(.4,0,.2,1),box-shadow .4s,border-color .4s;
-  group:true;
-}
-.card:hover{
-  transform:scale(1.04) translateY(-6px);
-  box-shadow:0 24px 60px rgba(0,0,0,.7),0 0 0 1px rgba(0,194,255,.3);
-  border-color:rgba(0,194,255,.4);
-  z-index:10;
-}
-
-.card-thumb{
-  width:100%;aspect-ratio:2/3;object-fit:cover;
-  display:block;
-  transition:transform .5s cubic-bezier(.4,0,.2,1),filter .4s;
-  filter:brightness(.85);
-}
-.card:hover .card-thumb{
-  transform:scale(1.08);
-  filter:brightness(1.05) saturate(1.15);
-}
-
-.card-overlay{
-  position:absolute;inset:0;
-  background:linear-gradient(0deg,rgba(5,6,15,.98) 0%,rgba(5,6,15,.7) 40%,transparent 70%);
-  opacity:0;transition:opacity .35s;
-  display:flex;flex-direction:column;justify-content:flex-end;
-  padding:16px;
-}
+.card{flex:0 0 220px;border-radius:var(--card-r);overflow:hidden;cursor:pointer;position:relative;scroll-snap-align:start;background:var(--surface);border:1px solid var(--border);transition:transform .4s cubic-bezier(.4,0,.2,1),box-shadow .4s,border-color .4s;}
+.card:hover{transform:scale(1.04) translateY(-6px);box-shadow:0 24px 60px rgba(0,0,0,.7),0 0 0 1px rgba(0,194,255,.3);border-color:rgba(0,194,255,.4);z-index:10;}
+.card-thumb{width:100%;aspect-ratio:2/3;object-fit:cover;display:block;transition:transform .5s cubic-bezier(.4,0,.2,1),filter .4s;filter:brightness(.85);}
+.card:hover .card-thumb{transform:scale(1.08);filter:brightness(1.05) saturate(1.15);}
+.card-overlay{position:absolute;inset:0;background:linear-gradient(0deg,rgba(5,6,15,.98) 0%,rgba(5,6,15,.7) 40%,transparent 70%);opacity:0;transition:opacity .35s;display:flex;flex-direction:column;justify-content:flex-end;padding:16px;}
 .card:hover .card-overlay{opacity:1}
-
 .card-title{font-size:14px;font-weight:700;margin-bottom:6px;line-height:1.3}
 .card-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
-.card-tag{
-  font-size:10px;font-weight:600;letter-spacing:.5px;
-  background:rgba(255,255,255,.1);border-radius:4px;padding:2px 7px;color:var(--muted);
-}
-.card-play{
-  width:36px;height:36px;border-radius:50%;
-  background:var(--accent);display:flex;align-items:center;justify-content:center;
-  transition:transform .2s;
-}
+.card-tag{font-size:10px;font-weight:600;letter-spacing:.5px;background:rgba(255,255,255,.1);border-radius:4px;padding:2px 7px;color:var(--muted);}
+.card-play{width:36px;height:36px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;transition:transform .2s;cursor:pointer;}
 .card:hover .card-play{transform:scale(1.1)}
 .card-play svg{width:14px;height:14px;fill:#05060f;margin-left:2px}
-
-/* RATING BADGE */
-.card-rating{
-  position:absolute;top:10px;right:10px;
-  background:rgba(5,6,15,.8);backdrop-filter:blur(8px);
-  border:1px solid var(--border);border-radius:6px;
-  font-size:11px;font-weight:700;padding:3px 8px;
-  color:var(--accent3);display:flex;align-items:center;gap:3px;
-}
-
-/* WIDE CARDS (continue watching) */
-.card-wide{
-  flex:0 0 280px;border-radius:var(--card-r);
-  overflow:hidden;cursor:pointer;
-  position:relative;scroll-snap-align:start;
-  background:var(--surface);border:1px solid var(--border);
-  transition:transform .4s,box-shadow .4s,border-color .4s;
-}
-.card-wide:hover{
-  transform:scale(1.03) translateY(-5px);
-  box-shadow:0 20px 50px rgba(0,0,0,.6),0 0 0 1px rgba(0,194,255,.25);
-  border-color:rgba(0,194,255,.35);z-index:10;
-}
+.card-rating{position:absolute;top:10px;right:10px;background:rgba(5,6,15,.8);backdrop-filter:blur(8px);border:1px solid var(--border);border-radius:6px;font-size:11px;font-weight:700;padding:3px 8px;color:var(--accent3);display:flex;align-items:center;gap:3px;}
+.card-actions{display:flex;align-items:center;justify-content:space-between}
+.card-wl-btn{width:32px;height:32px;border-radius:50%;flex-shrink:0;background:rgba(255,255,255,.1);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;}
+.card-wl-btn:hover{background:rgba(255,255,255,.2)}
+.card-wl-btn svg{width:14px;height:14px;fill:var(--text);transition:fill .2s}
+.card-wl-btn.active{background:var(--accent);border-color:var(--accent)}
+.card-wl-btn.active svg{fill:#05060f}
+.card-wide{flex:0 0 280px;border-radius:var(--card-r);overflow:hidden;cursor:pointer;position:relative;scroll-snap-align:start;background:var(--surface);border:1px solid var(--border);transition:transform .4s,box-shadow .4s,border-color .4s;}
+.card-wide:hover{transform:scale(1.03) translateY(-5px);box-shadow:0 20px 50px rgba(0,0,0,.6),0 0 0 1px rgba(0,194,255,.25);border-color:rgba(0,194,255,.35);z-index:10;}
 .card-wide .card-thumb{aspect-ratio:16/9}
 .card-wide .card-overlay{opacity:1;background:linear-gradient(0deg,rgba(5,6,15,.97) 0%,transparent 60%)}
 .card-wide .card-title{font-size:13px}
-
-.progress-bar{
-  height:3px;background:rgba(255,255,255,.15);border-radius:2px;overflow:hidden;
-  margin-top:8px;
-}
-.progress-fill{
-  height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));
-  border-radius:2px;
-}
-
-/* FEATURED BANNER */
-.feature-row{
-  display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:52px;
-}
-.feature-card{
-  border-radius:20px;overflow:hidden;position:relative;
-  height:220px;cursor:pointer;border:1px solid var(--border);
-  transition:transform .4s,box-shadow .4s;
-}
+.progress-bar{height:3px;background:rgba(255,255,255,.15);border-radius:2px;overflow:hidden;margin-top:8px;}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:2px;}
+.feature-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:52px;}
+.feature-card{border-radius:20px;overflow:hidden;position:relative;height:220px;cursor:pointer;border:1px solid var(--border);transition:transform .4s,box-shadow .4s;}
 .feature-card:hover{transform:scale(1.02);box-shadow:0 20px 50px rgba(0,0,0,.6)}
 .feature-card img{width:100%;height:100%;object-fit:cover;filter:brightness(.6)}
-.feature-card::after{
-  content:'';position:absolute;inset:0;
-  background:linear-gradient(135deg,rgba(5,6,15,.9) 0%,rgba(5,6,15,.4) 50%,transparent 100%);
-}
-.feature-card-content{
-  position:absolute;bottom:0;left:0;right:0;padding:20px;z-index:2;
-}
-.feature-tag{
-  font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
-  color:var(--accent);margin-bottom:6px;
-}
+.feature-card::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(5,6,15,.9) 0%,rgba(5,6,15,.4) 50%,transparent 100%);}
+.feature-card-content{position:absolute;bottom:0;left:0;right:0;padding:20px;z-index:2;}
+.feature-tag{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:6px;}
 .feature-title{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:1px}
 .feature-sub{font-size:12px;color:var(--muted);margin-top:4px}
-
-/* FOOTER */
-footer{
-  border-top:1px solid var(--border);
-  padding:40px 5%;
-  display:flex;align-items:center;justify-content:space-between;
-  position:relative;z-index:2;
-}
-.footer-logo{
-  font-family:'Bebas Neue',sans-serif;font-size:1.5rem;
-  letter-spacing:2px;color:var(--muted);
-}
+footer{border-top:1px solid var(--border);padding:40px 5%;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:2;}
+.footer-logo{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:2px;color:var(--muted);}
 .footer-logo em{color:var(--accent);font-style:normal}
 .footer-links{display:flex;gap:24px}
 .footer-links a{color:var(--muted);font-size:12px;text-decoration:none;transition:color .2s}
 .footer-links a:hover{color:var(--text)}
 .footer-copy{font-size:12px;color:rgba(255,255,255,.2)}
-
-/* TOAST */
-#toast{
-  position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(80px);
-  background:rgba(10,12,25,.95);border:1px solid var(--border);
-  backdrop-filter:blur(20px);border-radius:12px;
-  padding:12px 20px;font-size:13px;font-weight:500;
-  transition:transform .4s cubic-bezier(.4,0,.2,1),opacity .4s;
-  z-index:99000;opacity:0;white-space:nowrap;
-}
+#toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(80px);background:rgba(10,12,25,.95);border:1px solid var(--border);backdrop-filter:blur(20px);border-radius:12px;padding:12px 20px;font-size:13px;font-weight:500;transition:transform .4s cubic-bezier(.4,0,.2,1),opacity .4s;z-index:99000;opacity:0;white-space:nowrap;}
 #toast.show{transform:translateX(-50%) translateY(0);opacity:1}
-
+.icon-panel{position:absolute;top:calc(100% + 10px);right:0;background:rgba(10,12,25,0.97);backdrop-filter:blur(40px);border:1px solid var(--border);border-radius:14px;padding:10px;width:320px;max-height:420px;overflow-y:auto;opacity:0;visibility:hidden;transform:translateY(-8px);transition:all .25s cubic-bezier(.4,0,.2,1);z-index:200;}
+.icon-panel.show{opacity:1;visibility:visible;transform:translateY(0)}
+.icon-panel-head{display:flex;align-items:center;justify-content:space-between;padding:6px 8px 10px;font-size:13px;font-weight:700;border-bottom:1px solid var(--border);margin-bottom:6px;font-family:'Space Grotesk',sans-serif;letter-spacing:.5px;}
+.icon-panel-head .link{font-size:11px;font-weight:500;color:var(--accent);cursor:pointer}
+.panel-item{display:flex;gap:10px;align-items:flex-start;padding:10px 8px;border-radius:10px;cursor:pointer;transition:background .2s;}
+.panel-item:hover{background:var(--surface2)}
+.panel-item.unread{background:rgba(0,194,255,0.06)}
+.panel-item img{width:64px;height:36px;object-fit:cover;border-radius:6px;flex-shrink:0;border:1px solid var(--border)}
+.panel-item-icon{width:36px;height:36px;border-radius:8px;background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+.panel-item-text{font-size:12px;color:var(--text);line-height:1.45}
+.panel-item-sub{font-size:11px;color:var(--muted);margin-top:3px}
+.panel-item-remove{margin-left:auto;font-size:11px;color:var(--muted);background:none;border:none;cursor:pointer;flex-shrink:0;padding:4px;}
+.panel-item-remove:hover{color:var(--accent2)}
+.panel-empty{padding:24px 10px;text-align:center;font-size:13px;color:var(--muted)}
+.search-results{position:absolute;top:calc(100% + 10px);left:0;right:0;background:rgba(10,12,25,0.97);backdrop-filter:blur(40px);border:1px solid var(--border);border-radius:14px;padding:8px;max-height:380px;overflow-y:auto;opacity:0;visibility:hidden;transform:translateY(-8px);transition:all .2s;z-index:200;width:340px;}
+.search-results.show{opacity:1;visibility:visible;transform:translateY(0)}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(6px);z-index:99500;display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:all .25s;padding:20px;}
+.modal-overlay.show{opacity:1;visibility:visible}
+.modal-box{background:rgba(15,17,30,.98);border:1px solid var(--border);border-radius:18px;padding:28px;width:420px;max-width:100%;max-height:80vh;overflow-y:auto;transform:translateY(20px);transition:transform .25s;}
+.modal-overlay.show .modal-box{transform:translateY(0)}
+.modal-title{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:1px;margin-bottom:16px}
+.modal-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border);font-size:13px;gap:12px}
+.modal-row:last-of-type{border-bottom:none}
+.modal-row-label{font-weight:600}
+.modal-row-sub{font-size:11px;color:var(--muted);margin-top:2px}
+.toggle{width:42px;height:24px;border-radius:12px;background:var(--surface2);border:1px solid var(--border);cursor:pointer;position:relative;transition:all .2s;flex-shrink:0;}
+.toggle::after{content:'';position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:var(--muted);transition:all .2s;}
+.toggle.on{background:var(--accent);border-color:var(--accent)}
+.toggle.on::after{left:21px;background:#05060f}
+.modal-close{margin-top:18px;width:100%;padding:12px;border-radius:10px;border:1px solid var(--border);background:var(--surface2);color:var(--text);font-weight:600;cursor:pointer;font-size:13px;font-family:'DM Sans',sans-serif;}
+.modal-close:hover{background:rgba(255,255,255,.12)}
+.modal-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:12px;margin-top:8px}
+.row-empty,.row-loading{padding:50px 0;text-align:center;color:var(--muted);font-size:13px;width:100%;}
 @media(max-width:768px){
   .navbar{padding:0 1.5rem}
   .nav-links,.search-wrap,.nav-icon-btn{display:none}
@@ -584,466 +214,748 @@ footer{
   footer{flex-direction:column;gap:16px;text-align:center}
   .footer-links{flex-wrap:wrap;justify-content:center}
   .hero-arrows{display:none}
+  .modal-box{width:100%}
 }
 </style>
 </head>
 <body>
-
 <div id="cursor"></div>
 <div id="cursor-ring"></div>
-<div id="toast">🎬 Opening in Premium Mode</div>
+<div id="toast"></div>
 
-<!-- NAVBAR -->
 <nav class="navbar" id="navbar">
   <div class="nav-left">
-    <a href="#" class="logo">prime<em>video</em></a>
+    <a class="logo" onclick="scrollToTop()">prime<em>video</em></a>
     <span class="logo-badge">PRIME</span>
-    <div class="nav-links">
-      <a href="#" class="active">Home</a>
-      <a href="#">Movies</a>
-      <a href="#">TV Shows</a>
-      <a href="#">Live TV</a>
-      <a href="#">Kids</a>
+    <div class="nav-links" id="navLinks">
+      <a class="active" data-nav="home">Home</a>
+      <a data-nav="movies">Movies</a>
+      <a data-nav="tv">TV Shows</a>
+      <a data-nav="live">Live TV</a>
+      <a data-nav="kids">Kids</a>
     </div>
   </div>
   <div class="nav-right">
-    <!-- Category Dropdown -->
     <div class="category-btn" style="position:relative">
       <svg viewBox="0 0 24 24"><path d="M3 6h18v2H3zm3 5h12v2H6zm3 5h6v2H9z"/></svg>
       Browse
       <svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
-      <div class="dropdown">
-        <a href="#"><span>🎬</span> Action</a>
-        <a href="#"><span>😂</span> Comedy</a>
-        <a href="#"><span>💀</span> Horror</a>
-        <a href="#"><span>💘</span> Romance</a>
-        <a href="#"><span>🚀</span> Sci-Fi</a>
-        <a href="#"><span>🕵️</span> Thriller</a>
-        <a href="#"><span>📺</span> Series</a>
-        <a href="#"><span>🌍</span> International</a>
-      </div>
+      <div class="dropdown" id="browseDropdown"></div>
     </div>
-
     <div class="search-wrap">
       <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
-      <input type="text" placeholder="Search titles...">
+      <input type="text" id="searchInput" placeholder="Search titles..." autocomplete="off">
+      <div class="search-results" id="searchResults"></div>
     </div>
-
-    <!-- Notification -->
-    <div class="nav-icon-btn">
+    <div class="nav-icon-btn" id="notifBtn" style="position:relative">
       <svg viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
-      <div class="notif-badge">3</div>
-    </div>
-
-    <!-- Watchlist -->
-    <div class="nav-icon-btn">
-      <svg viewBox="0 0 24 24"><path d="M17 3H7c-1.1 0-1.99.9-1.99 2L5 21l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg>
-    </div>
-
-    <!-- Profile -->
-    <div class="profile-btn" style="position:relative">
-      <div class="profile-avatar">AM</div>
-      <span class="profile-name">Aman</span>
-      <svg style="width:12px;fill:var(--muted);flex-shrink:0" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
-      <div class="profile-dropdown">
-        <a href="#"><span>👤</span> My Profile</a>
-        <a href="#"><span>⚙️</span> Settings</a>
-        <a href="#"><span>💳</span> Subscriptions</a>
-        <a href="#"><span>📥</span> Downloads</a>
-        <a href="#"><span>🎭</span> Watch History</a>
-        <hr>
-        <a href="#"><span>🚪</span> Sign Out</a>
+      <div class="notif-badge" id="notifBadge">3</div>
+      <div class="icon-panel" id="notifPanel">
+        <div class="icon-panel-head">
+          <span>Notifications</span>
+          <span class="link" onclick="markAllRead(event)">Mark all read</span>
+        </div>
+        <div id="notifList"></div>
       </div>
     </div>
-
-    <button class="btn-prime">Try Prime</button>
+    <div class="nav-icon-btn" id="watchlistBtn" style="position:relative">
+      <svg viewBox="0 0 24 24"><path d="M17 3H7c-1.1 0-1.99.9-1.99 2L5 21l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg>
+      <div class="icon-panel" id="watchlistPanel">
+        <div class="icon-panel-head"><span>My List</span></div>
+        <div id="watchlistList"></div>
+      </div>
+    </div>
+    <div class="profile-btn" style="position:relative">
+      <div class="profile-avatar" id="profileAvatar">PV</div>
+      <span class="profile-name" id="profileName">Loading…</span>
+      <svg style="width:12px;fill:var(--muted);flex-shrink:0" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+      <div class="profile-dropdown">
+        <a onclick="openProfileModal(event)"><span>👤</span> My Profile</a>
+        <a onclick="openSettingsModal(event)"><span>⚙️</span> Settings</a>
+        <a onclick="openSubscriptionsModal(event)"><span>💳</span> Subscriptions</a>
+        <a onclick="openDownloadsModal(event)"><span>📥</span> Downloads</a>
+        <a onclick="openHistoryModal(event)"><span>🎭</span> Watch History</a>
+        <hr>
+        <a onclick="signOut(event)"><span>🚪</span> Sign Out</a>
+      </div>
+    </div>
+    <button class="btn-prime is-member" id="primeBtn" onclick="togglePrime()">Prime ✓</button>
   </div>
 </nav>
 
-<!-- HERO CAROUSEL -->
 <section class="hero" id="hero">
-  <div class="hero-slider" id="heroSlider">
-
-    <div class="hero-slide active" style="background:#05060f">
-      <img class="slide-bg" src="https://picsum.photos/id/1074/1920/1080" alt="The Boys">
-      <div class="hero-content">
-        <div class="hero-badge">Prime Original · Season 4</div>
-        <h1 class="hero-title">The<br><em>Boys</em></h1>
-        <div class="hero-meta">
-          <span class="pill">18+</span>
-          <span class="separator">·</span>
-          2024
-          <span class="separator">·</span>
-          4 Seasons
-          <span class="separator">·</span>
-          <span class="pill">4K UHD</span>
-          <span class="pill">Dolby Atmos</span>
-        </div>
-        <p class="hero-desc">A group of vigilantes set out to take down corrupt superheroes who abuse their superpowers. Brutal, darkly comedic, and relentlessly gripping.</p>
-        <div class="hero-actions">
-          <button class="btn-watch" onclick="showToast('The Boys')">
-            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-            Watch Now
-          </button>
-          <button class="btn-more">+ My List</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="hero-slide" style="background:#05060f">
-      <img class="slide-bg" src="https://picsum.photos/id/1015/1920/1080" alt="Mirzapur">
-      <div class="hero-content">
-        <div class="hero-badge">Amazon Original · S3 New</div>
-        <h1 class="hero-title"><em>Mirzapur</em></h1>
-        <div class="hero-meta">
-          <span class="pill">18+</span>
-          <span class="separator">·</span>
-          2024
-          <span class="separator">·</span>
-          3 Seasons
-          <span class="separator">·</span>
-          <span class="pill">HDR10+</span>
-        </div>
-        <p class="hero-desc">Crime, power, and betrayal collide in the lawless badlands of Mirzapur. India's most electrifying crime saga returns with a vengeance.</p>
-        <div class="hero-actions">
-          <button class="btn-watch" onclick="showToast('Mirzapur')">
-            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-            Watch Now
-          </button>
-          <button class="btn-more">+ My List</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="hero-slide" style="background:#05060f">
-      <img class="slide-bg" src="https://picsum.photos/id/1025/1920/1080" alt="Reacher">
-      <div class="hero-content">
-        <div class="hero-badge">Prime Exclusive · Season 3</div>
-        <h1 class="hero-title"><em>Reacher</em></h1>
-        <div class="hero-meta">
-          <span class="pill">16+</span>
-          <span class="separator">·</span>
-          2024
-          <span class="separator">·</span>
-          3 Seasons
-          <span class="separator">·</span>
-          <span class="pill">IMAX</span>
-        </div>
-        <p class="hero-desc">Jack Reacher, a lone wolf ex-military cop, wanders into trouble wherever he goes. Action-packed and razor sharp.</p>
-        <div class="hero-actions">
-          <button class="btn-watch" onclick="showToast('Reacher')">
-            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-            Watch Now
-          </button>
-          <button class="btn-more">+ My List</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="hero-slide" style="background:#05060f">
-      <img class="slide-bg" src="https://picsum.photos/id/1048/1920/1080" alt="Farzi">
-      <div class="hero-content">
-        <div class="hero-badge">Indian Original · Must Watch</div>
-        <h1 class="hero-title">Attack on<em>titan</em></h1>
-        <div class="hero-meta" style="font-family:'DM Sans',sans-serif; font-size:13px; color:var(--muted); font-weight:500; display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:28px;">
-          <span class="pill">18+</span>
-          <span class="separator">·</span>
-          2023
-          <span class="separator">·</span>
-          1 Season
-          <span class="separator">·</span>
-          <span class="pill">4K</span>
-        </div>
-        <p class="hero-desc">A small-time artist gets embroiled in a cat-and-mouse game with a sharp task-force officer after he creates the perfect counterfeit currency.</p>
-        <div class="hero-actions">
-          <button class="btn-watch" onclick="showToast('Farzi')">
-            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-            Watch Now
-          </button>
-          <button class="btn-more">+ My List</button>
-        </div>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- Dots -->
+  <div class="hero-slider" id="heroSlider"></div>
   <div class="hero-controls" id="heroDots"></div>
-
-  <!-- Arrows -->
   <div class="hero-arrows">
-    <div class="hero-arr" onclick="moveHero(-1)">
-      <svg viewBox="0 0 24 24"><path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6z"/></svg>
-    </div>
-    <div class="hero-arr" onclick="moveHero(1)">
-      <svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
-    </div>
+    <div class="hero-arr" onclick="moveHero(-1)"><svg viewBox="0 0 24 24"><path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6z"/></svg></div>
+    <div class="hero-arr" onclick="moveHero(1)"><svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg></div>
   </div>
-
-  <div class="slide-counter"><b id="cIdx">1</b> / 4</div>
+  <div class="slide-counter"><b id="cIdx">1</b> / <span id="cTotal">1</span></div>
 </section>
 
-<!-- CATEGORY BAR -->
-<div class="cat-bar">
-  <div class="cat-chip active" onclick="setActive(this)">All</div>
-  <div class="cat-chip" onclick="setActive(this)">🔥 Trending</div>
-  <div class="cat-chip" onclick="setActive(this)">🎬 Action</div>
-  <div class="cat-chip" onclick="setActive(this)">😂 Comedy</div>
-  <div class="cat-chip" onclick="setActive(this)">💀 Horror</div>
-  <div class="cat-chip" onclick="setActive(this)">🚀 Sci-Fi</div>
-  <div class="cat-chip" onclick="setActive(this)">💘 Romance</div>
-  <div class="cat-chip" onclick="setActive(this)">🕵️ Thriller</div>
-  <div class="cat-chip" onclick="setActive(this)">🌍 International</div>
-  <div class="cat-chip" onclick="setActive(this)">🎭 Drama</div>
-  <div class="cat-chip" onclick="setActive(this)">📺 Series</div>
-</div>
+<div class="cat-bar" id="catBar"></div>
 
-<!-- CONTENT -->
 <div class="container">
-
-  <!-- Continue Watching -->
   <div class="section">
     <div class="section-head">
       <div class="section-title">Continue Watching <span class="tag">IN PROGRESS</span></div>
-      <div class="see-all">See all</div>
+      <div class="see-all" onclick="openSeeAllModal('continue-watching','Continue Watching')">See all</div>
     </div>
     <div class="row-wrap">
       <div class="row-btn prev" onclick="scrollRow('cw',-1)"><svg viewBox="0 0 24 24"><path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6z"/></svg></div>
-      <div class="scroll-row" id="cw">
-        <script>document.write([
-          {t:'The Boys',p:72,img:'220'},
-          {t:'Mirzapur',p:45,img:'221'},
-          {t:'From',p:88,img:'222'},
-          {t:'Farzi',p:30,img:'223'},
-          {t:'Hostel Daze',p:15,img:'224'},
-          {t:'Jack Ryan',p:60,img:'225'},
-        ].map(c=>`
-        <div class="card-wide" onclick="showToast('${c.t}')">
-          <img class="card-thumb" src="https://picsum.photos/id/${c.img}/560/315?blur=1" alt="${c.t}" loading="lazy">
-          <div class="card-overlay">
-            <div class="card-title">${c.t}</div>
-            <div class="progress-bar"><div class="progress-fill" style="width:${c.p}%"></div></div>
-          </div>
-          <div class="card-rating">⭐ 8.${Math.floor(Math.random()*9)+1}</div>
-        </div>`).join(''))</script>
-      </div>
+      <div class="scroll-row" id="cw"></div>
       <div class="row-btn next" onclick="scrollRow('cw',1)"><svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg></div>
     </div>
   </div>
-
-  <!-- Featured Banner -->
-  <div class="feature-row">
-    <div class="feature-card" onclick="showToast('The Family Man')">
-      <img src="https://picsum.photos/id/1040/800/440?blur=1" alt="The Family Man">
-      <div class="feature-card-content">
-        <div class="feature-tag">🔥 Amazon Original</div>
-        <div class="feature-title">The Family Man</div>
-        <div class="feature-sub">Action Thriller · 2 Seasons · 18+</div>
-      </div>
-    </div>
-    <div class="feature-card" onclick="showToast('Gen V')">
-      <img src="https://picsum.photos/id/1062/800/440?blur=1" alt="Gen V">
-      <div class="feature-card-content">
-        <div class="feature-tag">⚡ New Release</div>
-        <div class="feature-title">The Boys: Gen V</div>
-        <div class="feature-sub">Superhero · 1 Season · 18+</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Amazon Originals -->
+  <div class="feature-row" id="featuredRow"></div>
   <div class="section">
     <div class="section-head">
       <div class="section-title">Amazon Originals <span class="tag">EXCLUSIVE</span></div>
-      <div class="see-all">See all</div>
+      <div class="see-all" onclick="openSeeAllModal('originals','Amazon Originals')">See all</div>
     </div>
     <div class="row-wrap">
       <div class="row-btn prev" onclick="scrollRow('orig',-1)"><svg viewBox="0 0 24 24"><path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6z"/></svg></div>
-      <div class="scroll-row" id="orig">
-        <script>document.write([
-          {t:'Reacher',y:'2024',r:'9.0',img:'230'},
-          {t:'Wheel of Time',y:'2023',r:'8.2',img:'231'},
-          {t:'Jack Ryan',y:'2023',r:'8.5',img:'232'},
-          {t:'Bosch Legacy',y:'2024',r:'8.8',img:'233'},
-          {t:'Upload',y:'2024',r:'7.9',img:'234'},
-          {t:'Invincible',y:'2024',r:'9.1',img:'235'},
-          {t:'Hunters',y:'2023',r:'8.4',img:'237'},
-        ].map(c=>`
-        <div class="card" onclick="showToast('${c.t}')">
-          <img class="card-thumb" src="https://picsum.photos/id/${c.img}/400/600?blur=1" alt="${c.t}" loading="lazy">
-          <div class="card-rating">⭐ ${c.r}</div>
-          <div class="card-overlay">
-            <div class="card-title">${c.t}</div>
-            <div class="card-tags"><span class="card-tag">${c.y}</span><span class="card-tag">HD</span></div>
-            <div class="card-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-          </div>
-        </div>`).join(''))</script>
-      </div>
+      <div class="scroll-row" id="orig"></div>
       <div class="row-btn next" onclick="scrollRow('orig',1)"><svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg></div>
     </div>
   </div>
-
-  <!-- Top Rated India -->
   <div class="section">
     <div class="section-head">
       <div class="section-title">Top Rated in India <span class="tag">TRENDING</span></div>
-      <div class="see-all">See all</div>
+      <div class="see-all" onclick="openSeeAllModal('india','Top Rated in India')">See all</div>
     </div>
     <div class="row-wrap">
       <div class="row-btn prev" onclick="scrollRow('india',-1)"><svg viewBox="0 0 24 24"><path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6z"/></svg></div>
-      <div class="scroll-row" id="india">
-        <script>document.write([
-          {t:'Mirzapur',y:'2024',r:'9.2',img:'240'},
-          {t:'Farzi',y:'2023',r:'8.9',img:'241'},
-          {t:'The Family Man',y:'2023',r:'9.3',img:'242'},
-          {t:'Hostel Daze',y:'2024',r:'8.7',img:'243'},
-          {t:'Panchayat',y:'2024',r:'9.0',img:'244'},
-          {t:'Aspirants',y:'2021',r:'9.1',img:'245'},
-          {t:'Tandav',y:'2021',r:'7.8',img:'246'},
-        ].map(c=>`
-        <div class="card" onclick="showToast('${c.t}')">
-          <img class="card-thumb" src="https://picsum.photos/id/${c.img}/400/600?blur=1" alt="${c.t}" loading="lazy">
-          <div class="card-rating">⭐ ${c.r}</div>
-          <div class="card-overlay">
-            <div class="card-title">${c.t}</div>
-            <div class="card-tags"><span class="card-tag">${c.y}</span><span class="card-tag">Hindi</span></div>
-            <div class="card-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-          </div>
-        </div>`).join(''))</script>
-      </div>
+      <div class="scroll-row" id="india"></div>
       <div class="row-btn next" onclick="scrollRow('india',1)"><svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg></div>
     </div>
   </div>
-
-  <!-- New This Month -->
   <div class="section">
     <div class="section-head">
       <div class="section-title">New This Month <span class="tag">JUST ADDED</span></div>
-      <div class="see-all">See all</div>
+      <div class="see-all" onclick="openSeeAllModal('new','New This Month')">See all</div>
     </div>
     <div class="row-wrap">
       <div class="row-btn prev" onclick="scrollRow('new',-1)"><svg viewBox="0 0 24 24"><path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6z"/></svg></div>
-      <div class="scroll-row" id="new">
-        <script>document.write([
-          {t:'Citadel S2',y:'2024',r:'8.3',img:'251'},
-          {t:'Gen V S2',y:'2024',r:'8.6',img:'252'},
-          {t:'The Continental',y:'2024',r:'8.0',img:'253'},
-          {t:'Dead Ringers',y:'2023',r:'7.9',img:'254'},
-          {t:'Paper Girls',y:'2022',r:'7.6',img:'255'},
-          {t:'A League of Own',y:'2022',r:'7.4',img:'256'},
-        ].map(c=>`
-        <div class="card" onclick="showToast('${c.t}')">
-          <img class="card-thumb" src="https://picsum.photos/id/${c.img}/400/600?blur=1" alt="${c.t}" loading="lazy">
-          <div class="card-rating">⭐ ${c.r}</div>
-          <div class="card-overlay">
-            <div class="card-title">${c.t}</div>
-            <div class="card-tags"><span class="card-tag">${c.y}</span><span class="card-tag">NEW</span></div>
-            <div class="card-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-          </div>
-        </div>`).join(''))</script>
-      </div>
+      <div class="scroll-row" id="new"></div>
       <div class="row-btn next" onclick="scrollRow('new',1)"><svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg></div>
     </div>
   </div>
-
 </div>
 
-<!-- FOOTER -->
 <footer>
   <div class="footer-logo">prime<em>video</em></div>
   <div class="footer-links">
-    <a href="#">About</a>
-    <a href="#">Privacy</a>
-    <a href="#">Terms</a>
-    <a href="#">Help</a>
-    <a href="#">Devices</a>
+    <a href="#">About</a><a href="#">Privacy</a><a href="#">Terms</a>
+    <a href="#">Help</a><a href="#">Devices</a>
   </div>
   <div class="footer-copy">© 2024 Amazon. All rights reserved.</div>
 </footer>
 
+<div class="modal-overlay" id="modalOverlay" onclick="closeModalOnOverlay(event)">
+  <div class="modal-box" id="modalBox"></div>
+</div>
+
 <script>
-// CURSOR
-const cur = document.getElementById('cursor');
+/* ============================================================
+   MOCK DATA
+   ============================================================ */
+const IMGS = {
+  land: [
+    "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=1400&h=800&fit=crop",
+    "https://images.unsplash.com/photo-1518929458119-e5bf444c30f4?w=1400&h=800&fit=crop",
+    "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1400&h=800&fit=crop",
+    "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=1400&h=800&fit=crop",
+    "https://images.unsplash.com/photo-1485846234645-a62644f84728?w=1400&h=800&fit=crop",
+  ],
+  port: [
+    "https://images.unsplash.com/photo-1635805737707-575885ab0820?w=400&h=600&fit=crop",
+    "https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?w=400&h=600&fit=crop",
+    "https://images.unsplash.com/photo-1509347528160-9a9e33742cdb?w=400&h=600&fit=crop",
+    "https://images.unsplash.com/photo-1440404653325-ab127d49abc1?w=400&h=600&fit=crop",
+    "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=400&h=600&fit=crop",
+    "https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?w=400&h=600&fit=crop",
+    "https://images.unsplash.com/photo-1612036782180-6f0b6cd846fe?w=400&h=600&fit=crop",
+    "https://images.unsplash.com/photo-1598899134739-24c46f58b8c0?w=400&h=600&fit=crop",
+    "https://images.unsplash.com/photo-1542204165-65bf26472b9b?w=400&h=600&fit=crop",
+    "https://images.unsplash.com/photo-1594909122845-11baa439b7bf?w=400&h=600&fit=crop",
+    "https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=400&h=600&fit=crop",
+    "https://images.unsplash.com/photo-1460881680858-30d872d5b530?w=400&h=600&fit=crop",
+  ]
+};
+
+const MOCK = {
+  heroSlides: [
+    { id:"h1", image:IMGS.land[0], badge:"Amazon Original Series", titleMain:"THE BOYS", titleEm:"Season 4",
+      description:"Superheroes are more popular than ever—as celebrities, politicians and symbols of hope.",
+      meta:{ ageRating:"18+", year:"2024", seasons:"4 Seasons", quality:["4K","HDR","Dolby"] }, movieId:"m1", movieTitle:"The Boys Season 4" },
+    { id:"h2", image:IMGS.land[1], badge:"Prime Video Original", titleMain:"REACHER", titleEm:"Season 2",
+      description:"Jack Reacher investigates the murder of fellow Military Police officer Frances Neagley.",
+      meta:{ ageRating:"16+", year:"2023", seasons:"2 Seasons", quality:["4K","Dolby Atmos"] }, movieId:"m2", movieTitle:"Reacher Season 2" },
+    { id:"h3", image:IMGS.land[2], badge:"Now Streaming", titleMain:"MIRZAPUR", titleEm:"Season 3",
+      description:"Set in the heartland of Uttar Pradesh, this crime thriller follows the saga of guns, drugs, and lawlessness.",
+      meta:{ ageRating:"18+", year:"2024", seasons:"3 Seasons", quality:["4K","Hindi"] }, movieId:"m3", movieTitle:"Mirzapur Season 3" },
+    { id:"h4", image:IMGS.land[3], badge:"Critically Acclaimed", titleMain:"PANCHAYAT", titleEm:"Season 3",
+      description:"A city-educated young man reluctantly takes up a government job posting in rural India.",
+      meta:{ ageRating:"All", year:"2024", seasons:"3 Seasons", quality:["4K","Hindi"] }, movieId:"m4", movieTitle:"Panchayat Season 3" },
+    { id:"h5", image:IMGS.land[4], badge:"Global Hit", titleMain:"CITADEL", titleEm:"India",
+      description:"When a global spy agency is dismantled, two agents awaken years later with no memory of their pasts.",
+      meta:{ ageRating:"16+", year:"2024", seasons:"1 Season", quality:["4K","HDR"] }, movieId:"m5", movieTitle:"Citadel India" },
+  ],
+  categories: [
+    {slug:"all",name:"All",icon:"🏠"},{slug:"action",name:"Action",icon:"⚡"},
+    {slug:"drama",name:"Drama",icon:"🎭"},{slug:"comedy",name:"Comedy",icon:"😂"},
+    {slug:"thriller",name:"Thriller",icon:"🔪"},{slug:"scifi",name:"Sci-Fi",icon:"🚀"},
+    {slug:"kids",name:"Kids",icon:"🧒"},{slug:"romance",name:"Romance",icon:"💕"},
+    {slug:"horror",name:"Horror",icon:"👻"},{slug:"hindi",name:"Hindi",icon:"🇮🇳"},
+    {slug:"sports",name:"Sports",icon:"⚽"},
+  ],
+  movies: [
+    {_id:"m1",title:"The Boys",image:IMGS.port[0],rating:8.7,year:2024,tags:["Action","Superhero","18+"],section:"originals",category:"action"},
+    {_id:"m2",title:"Reacher",image:IMGS.port[1],rating:8.1,year:2023,tags:["Action","Thriller"],section:"originals",category:"action"},
+    {_id:"m6",title:"Rings of Power",image:IMGS.port[5],rating:7.3,year:2024,tags:["Fantasy","Epic"],section:"originals",category:"drama"},
+    {_id:"m7",title:"Gen V",image:IMGS.port[6],rating:7.9,year:2023,tags:["Drama","Superhero"],section:"originals",category:"drama"},
+    {_id:"m8",title:"Fallout",image:IMGS.port[7],rating:8.8,year:2024,tags:["Sci-Fi","Post-Apocalyptic"],section:"originals",category:"scifi"},
+    {_id:"m9",title:"Jack Ryan",image:IMGS.port[8],rating:8.0,year:2023,tags:["Action","Espionage"],section:"originals",category:"thriller"},
+    {_id:"m10",title:"Invincible",image:IMGS.port[9],rating:8.9,year:2024,tags:["Animation","Superhero"],section:"originals",category:"action"},
+    {_id:"m3",title:"Mirzapur",image:IMGS.port[2],rating:8.5,year:2024,tags:["Crime","Drama","Hindi"],section:"india",category:"hindi"},
+    {_id:"m4",title:"Panchayat",image:IMGS.port[3],rating:9.0,year:2024,tags:["Comedy","Drama","Hindi"],section:"india",category:"comedy"},
+    {_id:"m5",title:"Citadel India",image:IMGS.port[4],rating:7.6,year:2024,tags:["Action","Thriller","Hindi"],section:"india",category:"action"},
+    {_id:"m11",title:"Paatal Lok",image:IMGS.port[10],rating:8.4,year:2024,tags:["Crime","Thriller","Hindi"],section:"india",category:"thriller"},
+    {_id:"m12",title:"Made in Heaven",image:IMGS.port[11],rating:8.3,year:2023,tags:["Drama","Romance","Hindi"],section:"india",category:"romance"},
+    {_id:"m13",title:"Road House",image:IMGS.port[0],rating:7.1,year:2024,tags:["Action","Remake"],section:"new",category:"action"},
+    {_id:"m14",title:"Saltburn",image:IMGS.port[1],rating:7.4,year:2024,tags:["Thriller","Drama"],section:"new",category:"thriller"},
+    {_id:"m15",title:"The Idea of You",image:IMGS.port[2],rating:6.8,year:2024,tags:["Romance","Drama"],section:"new",category:"romance"},
+    {_id:"m16",title:"Kumari Srimathi",image:IMGS.port[3],rating:8.2,year:2024,tags:["Comedy","Hindi"],section:"new",category:"comedy"},
+    {_id:"m17",title:"Croc",image:IMGS.port[4],rating:7.8,year:2024,tags:["Horror","Thriller"],section:"new",category:"horror"},
+    {_id:"m18",title:"Deadpool 3",image:IMGS.port[5],rating:8.5,year:2024,tags:["Action","Comedy","Marvel"],section:"new",category:"action"},
+    {_id:"m19",title:"Fallout: Director's Cut",image:IMGS.land[4],rating:9.1,year:2024,tags:["Sci-Fi"],
+      section:"featured",featureTag:"EDITORS' PICK",featureSub:"Complete series now streaming in 4K HDR"},
+    {_id:"m20",title:"The Boys: Behind the Cape",image:IMGS.land[1],rating:8.0,year:2024,tags:["Documentary"],
+      section:"featured",featureTag:"EXCLUSIVE CONTENT",featureSub:"All-access documentary — limited time"},
+  ],
+  continueWatching: [
+    {movieId:"m3",progress:62},{movieId:"m8",progress:28},
+    {movieId:"m1",progress:85},{movieId:"m4",progress:45},{movieId:"m10",progress:15},
+  ],
+  watchlist: ["m2","m5","m6"],
+  notifications: [
+    {_id:"n1",icon:"🎬",message:"New episode of The Boys is now available",createdAt:"2024-06-14T10:00:00Z",read:false},
+    {_id:"n2",icon:"🔥",message:"Fallout just dropped Episode 5 — don't miss it!",createdAt:"2024-06-13T18:30:00Z",read:false},
+    {_id:"n3",icon:"⭐",message:"Based on your history, try Panchayat Season 3",createdAt:"2024-06-12T09:00:00Z",read:false},
+    {_id:"n4",icon:"💳",message:"Your Prime membership renews on July 1",createdAt:"2024-06-10T12:00:00Z",read:true},
+    {_id:"n5",icon:"🎁",message:"Exclusive: Watch Rings of Power S2 trailer now",createdAt:"2024-06-08T15:00:00Z",read:true},
+  ],
+};
+
+function getMovie(id){ return MOCK.movies.find(m=>m._id===id)||null; }
+
+/* ============================================================
+   STATE — default profile (shown before session loads)
+   ============================================================ */
+let watchlistIds = new Set(MOCK.watchlist);
+let activeCategory = 'all';
+let heroIdx = 0;
+let heroTimer = null;
+let currentProfile = {
+  name: 'Prime Member',
+  email: '',
+  initials: 'PV',
+  isPrimeMember: true,
+  preferences: { autoplay:true, emailNotifications:false, maturityRating:'18+' }
+};
+let notifData = MOCK.notifications.map(n=>({...n}));
+let cwData = MOCK.continueWatching.map(i=>({...i}));
+
+/* ============================================================
+   LOAD USER FROM LOGIN SESSION  ← THE KEY FIX
+   Reads name + email + initials saved by prime_video_login.html
+   ============================================================ */
+function loadSessionUser(){
+  try{
+    const raw = sessionStorage.getItem('pv_user');
+    if(!raw) return;
+    const u = JSON.parse(raw);
+
+    // Apply every field that the login page may have provided
+    if(u.name && u.name.trim())      currentProfile.name     = u.name.trim();
+    if(u.email && u.email.trim())    currentProfile.email    = u.email.trim();
+
+    // initials: trust what login computed, or recompute here
+    if(u.initials && u.initials.trim()){
+      currentProfile.initials = u.initials.trim().toUpperCase();
+    } else if(currentProfile.name){
+      const parts = currentProfile.name.trim().split(/\s+/).filter(Boolean);
+      if(parts.length === 0)          currentProfile.initials = 'PV';
+      else if(parts.length === 1)     currentProfile.initials = parts[0].slice(0,2).toUpperCase();
+      else                            currentProfile.initials = (parts[0][0]+parts[parts.length-1][0]).toUpperCase();
+    }
+  }catch(e){ /* ignore malformed data */ }
+}
+
+/* ============================================================
+   PROFILE BAR — updates both name text AND avatar initials
+   ============================================================ */
+function renderProfileBar(){
+  document.getElementById('profileName').textContent   = currentProfile.name;
+  document.getElementById('profileAvatar').textContent = currentProfile.initials;
+}
+
+function updatePrimeButton(){
+  const btn = document.getElementById('primeBtn');
+  if(currentProfile.isPrimeMember){
+    btn.textContent='Prime ✓'; btn.classList.add('is-member');
+  } else {
+    btn.textContent='Try Prime'; btn.classList.remove('is-member');
+  }
+}
+function togglePrime(){
+  currentProfile.isPrimeMember = !currentProfile.isPrimeMember;
+  updatePrimeButton();
+  showToast(currentProfile.isPrimeMember ? '🎉 Welcome to Prime!' : 'Prime membership cancelled');
+}
+function signOut(e){
+  e.preventDefault();
+  try{ sessionStorage.removeItem('pv_user'); }catch(err){}
+  showToast('👋 Signed out');
+  setTimeout(()=>{ window.location.href='prime_video_login.html'; }, 700);
+}
+
+/* ============================================================
+   CURSOR
+   ============================================================ */
+const cur  = document.getElementById('cursor');
 const ring = document.getElementById('cursor-ring');
 let mx=0,my=0,rx=0,ry=0;
 document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
 (function animate(){rx+=(mx-rx)*.15;ry+=(my-ry)*.15;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animate);})();
-document.querySelectorAll('button,a,.card,.card-wide,.hero-arr,.row-btn,.cat-chip,.hero-dot,.nav-icon-btn').forEach(el=>{
-  el.addEventListener('mouseenter',()=>{cur.style.width='20px';cur.style.height='20px';ring.style.width='60px';ring.style.height='60px';});
-  el.addEventListener('mouseleave',()=>{cur.style.width='12px';cur.style.height='12px';ring.style.width='38px';ring.style.height='38px';});
-});
+function bindCursorTargets(){
+  document.querySelectorAll('button,a,.card,.card-wide,.hero-arr,.row-btn,.cat-chip,.hero-dot,.nav-icon-btn,.card-wl-btn,.toggle,.panel-item').forEach(el=>{
+    if(el._cursorBound) return; el._cursorBound=true;
+    el.addEventListener('mouseenter',()=>{cur.style.width='20px';cur.style.height='20px';ring.style.width='60px';ring.style.height='60px';});
+    el.addEventListener('mouseleave',()=>{cur.style.width='12px';cur.style.height='12px';ring.style.width='38px';ring.style.height='38px';});
+  });
+}
 
-// NAVBAR
+/* ============================================================
+   NAVBAR
+   ============================================================ */
 const navbar=document.getElementById('navbar');
-window.addEventListener('scroll',()=>{
-  navbar.classList.toggle('scrolled',window.scrollY>40);
+window.addEventListener('scroll',()=>navbar.classList.toggle('scrolled',window.scrollY>40));
+function scrollToTop(){ window.scrollTo({top:0,behavior:'smooth'}); }
+document.getElementById('navLinks').addEventListener('click',(e)=>{
+  const a=e.target.closest('a'); if(!a) return;
+  document.querySelectorAll('#navLinks a').forEach(x=>x.classList.remove('active'));
+  a.classList.add('active');
 });
 
-// HERO SLIDER
-let hIdx=0;const hTotal=4;
-const hSlider=document.getElementById('heroSlider');
-const hDotsCont=document.getElementById('heroDots');
-const hSlides=hSlider.querySelectorAll('.hero-slide');
-
-// Create dots
-hSlides.forEach((_,i)=>{
-  const d=document.createElement('div');
-  d.className='hero-dot'+(i===0?' active':'');
-  d.onclick=()=>goHero(i);
-  hDotsCont.appendChild(d);
-});
-const hDots=hDotsCont.querySelectorAll('.hero-dot');
-
-function goHero(n){
-  hSlides[hIdx].classList.remove('active');
-  hDots[hIdx].classList.remove('active');
-  hIdx=(n+hTotal)%hTotal;
-  hSlider.style.transform=`translateX(-${hIdx*100}%)`;
-  hSlides[hIdx].classList.add('active');
-  hDots[hIdx].classList.add('active');
-  document.getElementById('cIdx').textContent=hIdx+1;
-}
-function moveHero(d){goHero(hIdx+d)}
-const hTimer=setInterval(()=>moveHero(1),6000);
-
-// CATEGORY CHIPS
-function setActive(el){
-  document.querySelectorAll('.cat-chip').forEach(c=>c.classList.remove('active'));
-  el.classList.add('active');
-}
-
-// SCROLL ROWS
-function scrollRow(id,dir){
+/* ============================================================
+   SCROLL ROW / TOAST
+   ============================================================ */
+function scrollRow(id, dir){
   const row=document.getElementById(id);
-  const w=row.querySelector('.card-wide,.card')?.offsetWidth||240;
-  row.scrollBy({left:dir*(w+14)*3,behavior:'smooth'});
+  if(row) row.scrollBy({left:dir*660,behavior:'smooth'});
 }
-
-// SMOOTH WHEEL SCROLL ON ROWS
-document.querySelectorAll('.scroll-row').forEach(r=>{
-  r.addEventListener('wheel',e=>{e.preventDefault();r.scrollLeft+=e.deltaY*1.5;},{passive:false});
-});
-
-// TOAST
-function showToast(title){
+function showToast(msg){
   const t=document.getElementById('toast');
-  t.textContent=`▶ Playing: ${title}`;
-  t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),2200);
+  t.textContent=msg; t.classList.add('show');
+  clearTimeout(t._timer);
+  t._timer=setTimeout(()=>t.classList.remove('show'),2400);
 }
 
-// IMAGE FADE IN
-document.querySelectorAll('img').forEach(img=>{
-  img.style.opacity='0';img.style.transition='opacity .4s ease';
-  if(img.complete)img.style.opacity='1';
-  else img.addEventListener('load',()=>img.style.opacity='1');
+/* ============================================================
+   ICON PANELS
+   ============================================================ */
+function setupIconPanel(btnId, panelId, onOpen){
+  const btn=document.getElementById(btnId);
+  const panel=document.getElementById(panelId);
+  btn.addEventListener('click',(e)=>{
+    e.stopPropagation();
+    const willShow=!panel.classList.contains('show');
+    document.querySelectorAll('.icon-panel.show').forEach(p=>p.classList.remove('show'));
+    if(willShow){ panel.classList.add('show'); if(onOpen) onOpen(); }
+  });
+  panel.addEventListener('click',e=>e.stopPropagation());
+}
+document.addEventListener('click',()=>document.querySelectorAll('.icon-panel.show').forEach(p=>p.classList.remove('show')));
+
+/* ============================================================
+   MODAL
+   ============================================================ */
+const modalOverlay=document.getElementById('modalOverlay');
+const modalBox=document.getElementById('modalBox');
+function openModal(html){ modalBox.innerHTML=html; modalOverlay.classList.add('show'); }
+function closeModal(){ modalOverlay.classList.remove('show'); }
+function closeModalOnOverlay(e){ if(e.target===modalOverlay) closeModal(); }
+
+function openProfileModal(e){
+  e.preventDefault();
+  openModal(`
+    <div class="modal-title">My Profile</div>
+    <div class="modal-row"><div class="modal-row-label">Name</div><div>${currentProfile.name}</div></div>
+    <div class="modal-row"><div class="modal-row-label">Email</div><div>${currentProfile.email||'—'}</div></div>
+    <div class="modal-row"><div class="modal-row-label">Membership</div><div>${currentProfile.isPrimeMember?'✅ Prime Active':'Free'}</div></div>
+    <div class="modal-row"><div class="modal-row-label">Maturity Rating</div><div>${currentProfile.preferences.maturityRating}</div></div>
+    <button class="modal-close" onclick="closeModal()">Close</button>
+  `);
+}
+function openSettingsModal(e){
+  e.preventDefault();
+  const p=currentProfile.preferences;
+  openModal(`
+    <div class="modal-title">Settings</div>
+    <div class="modal-row">
+      <div><div class="modal-row-label">Autoplay next episode</div><div class="modal-row-sub">Automatically continue your show</div></div>
+      <div class="toggle ${p.autoplay?'on':''}" onclick="togglePref(this,'autoplay')"></div>
+    </div>
+    <div class="modal-row">
+      <div><div class="modal-row-label">Email notifications</div><div class="modal-row-sub">New releases & recommendations</div></div>
+      <div class="toggle ${p.emailNotifications?'on':''}" onclick="togglePref(this,'emailNotifications')"></div>
+    </div>
+    <button class="modal-close" onclick="closeModal()">Done</button>
+  `);
+}
+function togglePref(el,key){
+  el.classList.toggle('on');
+  currentProfile.preferences[key]=el.classList.contains('on');
+  showToast(`${currentProfile.preferences[key]?'Enabled':'Disabled'} ${key.replace(/([A-Z])/g,' $1').toLowerCase()}`);
+}
+function openSubscriptionsModal(e){
+  e.preventDefault();
+  openModal(`
+    <div class="modal-title">Subscriptions</div>
+    <div class="modal-row">
+      <div>
+        <div class="modal-row-label">Prime Video</div>
+        <div class="modal-row-sub">${currentProfile.isPrimeMember?'✅ Active membership':'Not subscribed'}</div>
+      </div>
+      <div class="toggle ${currentProfile.isPrimeMember?'on':''}" onclick="togglePrime();openSubscriptionsModal({preventDefault:()=>{}})"></div>
+    </div>
+    <button class="modal-close" onclick="closeModal()">Close</button>
+  `);
+}
+function openDownloadsModal(e){
+  e.preventDefault();
+  openModal(`<div class="modal-title">Downloads</div><div class="panel-empty">No downloads yet.</div><button class="modal-close" onclick="closeModal()">Close</button>`);
+}
+function openHistoryModal(e){
+  e.preventDefault();
+  const items=getCWItems();
+  const rows=items.map(i=>`
+    <div class="modal-row">
+      <div style="display:flex;align-items:center;gap:10px;min-width:0">
+        <img src="${i.movie.image}" style="width:60px;height:34px;object-fit:cover;border-radius:6px;border:1px solid var(--border)">
+        <div><div class="modal-row-label">${i.movie.title}</div><div class="modal-row-sub">${i.progress}% watched</div></div>
+      </div>
+    </div>`).join('');
+  openModal(`<div class="modal-title">Watch History</div>${rows}<button class="modal-close" onclick="closeModal()">Close</button>`);
+}
+function openSeeAllModal(section,label){
+  let movies;
+  if(section==='continue-watching'){
+    movies=getCWItems().map(i=>i.movie);
+  } else {
+    movies=MOCK.movies.filter(m=>{
+      if(m.section!==section) return false;
+      if(activeCategory!=='all' && m.category!==activeCategory) return false;
+      return true;
+    });
+  }
+  if(!movies.length){
+    openModal(`<div class="modal-title">${label}</div><div class="panel-empty">Nothing here yet.</div><button class="modal-close" onclick="closeModal()">Close</button>`);
+    return;
+  }
+  const grid=movies.map(m=>`
+    <div class="card" onclick="playMovie('${m._id}','${escAttr(m.title)}')" style="flex:none">
+      <img class="card-thumb" src="${m.image}" alt="${escAttr(m.title)}" loading="lazy">
+      ${m.rating?`<div class="card-rating">⭐ ${m.rating}</div>`:''}
+      <div class="card-overlay" style="opacity:1">
+        <div class="card-title">${m.title}</div>
+        <div class="card-tags">${(m.tags||[]).map(t=>`<span class="card-tag">${t}</span>`).join('')}</div>
+      </div>
+    </div>`).join('');
+  openModal(`<div class="modal-title">${label}</div><div class="modal-grid">${grid}</div><button class="modal-close" onclick="closeModal()">Close</button>`);
+  bindCursorTargets();
+}
+function escAttr(s){ return String(s).replace(/'/g,"&#39;").replace(/"/g,'&quot;'); }
+
+/* ============================================================
+   NOTIFICATIONS
+   ============================================================ */
+function renderNotifications(){
+  const unread=notifData.filter(n=>!n.read).length;
+  const badge=document.getElementById('notifBadge');
+  if(unread>0){ badge.textContent=unread; badge.classList.remove('hidden'); }
+  else badge.classList.add('hidden');
+  const el=document.getElementById('notifList');
+  if(!notifData.length){ el.innerHTML=`<div class="panel-empty">You're all caught up 🎉</div>`; return; }
+  el.innerHTML=notifData.map(n=>`
+    <div class="panel-item ${n.read?'':'unread'}" onclick="readNotif('${n._id}',this)">
+      <div class="panel-item-icon">${n.icon||'🔔'}</div>
+      <div class="panel-item-text">${n.message}<div class="panel-item-sub">${new Date(n.createdAt).toLocaleDateString('en-IN',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})}</div></div>
+    </div>`).join('');
+  bindCursorTargets();
+}
+function readNotif(id,el){
+  if(!el.classList.contains('unread')) return;
+  el.classList.remove('unread');
+  const n=notifData.find(x=>x._id===id); if(n) n.read=true;
+  renderNotifications();
+}
+function markAllRead(e){
+  e.stopPropagation();
+  notifData.forEach(n=>n.read=true);
+  renderNotifications();
+  showToast('All notifications marked as read');
+}
+
+/* ============================================================
+   WATCHLIST
+   ============================================================ */
+function renderWatchlistPanel(){
+  const el=document.getElementById('watchlistList');
+  const items=[...watchlistIds].map(id=>getMovie(id)).filter(Boolean);
+  if(!items.length){ el.innerHTML=`<div class="panel-empty">Your list is empty.</div>`; return; }
+  el.innerHTML=items.map(m=>`
+    <div class="panel-item" onclick="playMovie('${m._id}','${escAttr(m.title)}')">
+      <img src="${m.image}" alt="${escAttr(m.title)}">
+      <div class="panel-item-text" style="flex:1">${m.title}</div>
+      <button class="panel-item-remove" onclick="event.stopPropagation();toggleWL('${m._id}')">Remove</button>
+    </div>`).join('');
+  bindCursorTargets();
+}
+function toggleWL(movieId){
+  if(watchlistIds.has(movieId)) watchlistIds.delete(movieId); else watchlistIds.add(movieId);
+  document.querySelectorAll(`[data-wl-id="${movieId}"]`).forEach(btn=>{
+    const inList=watchlistIds.has(movieId);
+    btn.classList.toggle('active',inList);
+    if(btn.classList.contains('btn-more')) btn.textContent=inList?'✓ In My List':'+ My List';
+  });
+  renderWatchlistPanel();
+  showToast(watchlistIds.has(movieId)?'+ Added to My List':'− Removed from My List');
+}
+
+/* ============================================================
+   CONTINUE WATCHING
+   ============================================================ */
+function playMovie(movieId,title){
+  const existing=cwData.find(i=>i.movieId===movieId);
+  if(existing){ existing.progress=Math.min(100,existing.progress+8); }
+  else { cwData.unshift({movieId,progress:8}); }
+  showToast(`▶ Playing: ${title}`);
+  renderCW();
+}
+function getCWItems(){
+  return cwData.map(i=>({...i,movie:getMovie(i.movieId)})).filter(i=>i.movie);
+}
+function renderCW(){
+  const row=document.getElementById('cw');
+  const items=getCWItems();
+  if(!items.length){ row.innerHTML=`<div class="row-empty">Nothing in progress yet.</div>`; return; }
+  row.innerHTML=items.map(i=>`
+    <div class="card-wide" onclick="playMovie('${i.movie._id}','${escAttr(i.movie.title)}')">
+      <img class="card-thumb" src="${i.movie.image}" alt="${escAttr(i.movie.title)}" loading="lazy">
+      <div class="card-overlay">
+        <div class="card-title">${i.movie.title}</div>
+        <div class="progress-bar"><div class="progress-fill" style="width:${i.progress}%"></div></div>
+      </div>
+      ${i.movie.rating?`<div class="card-rating">⭐ ${i.movie.rating}</div>`:''}
+    </div>`).join('');
+  bindCursorTargets();
+}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+function renderHero(){
+  const slides=MOCK.heroSlides;
+  document.getElementById('cTotal').textContent=slides.length;
+  document.getElementById('heroSlider').innerHTML=slides.map((s,i)=>{
+    const inList=watchlistIds.has(s.movieId);
+    return `
+    <div class="hero-slide ${i===0?'active':''}">
+      <img class="slide-bg" src="${s.image}" alt="${escAttr(s.titleEm)}">
+      <div class="hero-content">
+        <div class="hero-badge">${s.badge}</div>
+        <h1 class="hero-title">${s.titleMain||''}<em>${s.titleEm}</em></h1>
+        <div class="hero-meta">
+          <span class="pill">${s.meta.ageRating}</span>
+          <span class="separator">·</span>${s.meta.year}
+          <span class="separator">·</span>${s.meta.seasons}
+          <span class="separator">·</span>
+          ${s.meta.quality.map(q=>`<span class="pill">${q}</span>`).join('')}
+        </div>
+        <p class="hero-desc">${s.description}</p>
+        <div class="hero-actions">
+          <button class="btn-watch" onclick="playMovie('${s.movieId}','${escAttr(s.movieTitle)}')">
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>Watch Now
+          </button>
+          <button class="btn-more ${inList?'active':''}" data-wl-id="${s.movieId}" onclick="toggleWL('${s.movieId}')">
+            ${inList?'✓ In My List':'+ My List'}
+          </button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+  const dotsCont=document.getElementById('heroDots');
+  dotsCont.innerHTML=slides.map((_,i)=>`<div class="hero-dot ${i===0?'active':''}" onclick="goHero(${i})"></div>`).join('');
+  heroIdx=0;
+  if(heroTimer) clearInterval(heroTimer);
+  heroTimer=setInterval(()=>moveHero(1),6000);
+  bindCursorTargets();
+}
+function goHero(n){
+  const slides=document.querySelectorAll('.hero-slide');
+  const dots=document.querySelectorAll('.hero-dot');
+  if(!slides.length) return;
+  slides[heroIdx]?.classList.remove('active');
+  dots[heroIdx]?.classList.remove('active');
+  heroIdx=(n+slides.length)%slides.length;
+  document.getElementById('heroSlider').style.transform=`translateX(-${heroIdx*100}%)`;
+  slides[heroIdx]?.classList.add('active');
+  dots[heroIdx]?.classList.add('active');
+  document.getElementById('cIdx').textContent=heroIdx+1;
+}
+function moveHero(d){ goHero(heroIdx+d); }
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowLeft') moveHero(-1);
+  if(e.key==='ArrowRight') moveHero(1);
 });
 
-// KEYBOARD NAV
-document.addEventListener('keydown',e=>{
-  if(e.key==='ArrowLeft')moveHero(-1);
-  if(e.key==='ArrowRight')moveHero(1);
+/* ============================================================
+   CATEGORIES
+   ============================================================ */
+function renderCategories(){
+  document.getElementById('catBar').innerHTML=MOCK.categories.map(c=>`
+    <div class="cat-chip ${c.slug==='all'?'active':''}" data-slug="${c.slug}" onclick="setActiveCategory('${c.slug}',this)">
+      ${c.icon} ${c.name}
+    </div>`).join('');
+  document.getElementById('browseDropdown').innerHTML=MOCK.categories.map(c=>`
+    <a onclick="setActiveCategory('${c.slug}')"><span>${c.icon}</span> ${c.name}</a>`).join('');
+  bindCursorTargets();
+}
+function setActiveCategory(slug,el){
+  activeCategory=slug;
+  document.querySelectorAll('.cat-chip').forEach(c=>c.classList.remove('active'));
+  const chip=el||document.querySelector(`.cat-chip[data-slug="${slug}"]`);
+  if(chip) chip.classList.add('active');
+  renderSection('originals','orig');
+  renderSection('india','india');
+  renderSection('new','new');
+  if(!el) showToast(`Filtering: ${slug}`);
+}
+
+/* ============================================================
+   MOVIE CARDS
+   ============================================================ */
+function movieCardHtml(m){
+  const inList=watchlistIds.has(m._id);
+  return `
+    <div class="card" onclick="playMovie('${m._id}','${escAttr(m.title)}')">
+      <img class="card-thumb" src="${m.image}" alt="${escAttr(m.title)}" loading="lazy">
+      ${m.rating?`<div class="card-rating">⭐ ${m.rating}</div>`:''}
+      <div class="card-overlay">
+        <div class="card-title">${m.title}</div>
+        <div class="card-tags">${(m.tags||[]).map(t=>`<span class="card-tag">${t}</span>`).join('')}</div>
+        <div class="card-actions">
+          <div class="card-play" onclick="event.stopPropagation();playMovie('${m._id}','${escAttr(m.title)}')">
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+          <div class="card-wl-btn ${inList?'active':''}" data-wl-id="${m._id}" onclick="event.stopPropagation();toggleWL('${m._id}')">
+            <svg viewBox="0 0 24 24"><path d="M17 3H7c-1.1 0-1.99.9-1.99 2L5 21l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>`;
+}
+function renderSection(section,rowId){
+  const row=document.getElementById(rowId);
+  const movies=MOCK.movies.filter(m=>{
+    if(m.section!==section) return false;
+    if(activeCategory!=='all'&&m.category!==activeCategory) return false;
+    return true;
+  });
+  if(!movies.length){ row.innerHTML=`<div class="row-empty">No titles match this filter.</div>`; return; }
+  row.innerHTML=movies.map(movieCardHtml).join('');
+  bindCursorTargets();
+}
+
+/* ============================================================
+   FEATURED
+   ============================================================ */
+function renderFeatured(){
+  const el=document.getElementById('featuredRow');
+  const movies=MOCK.movies.filter(m=>m.section==='featured');
+  if(!movies.length){ el.innerHTML=''; return; }
+  el.innerHTML=movies.map(m=>`
+    <div class="feature-card" onclick="playMovie('${m._id}','${escAttr(m.title)}')">
+      <img src="${m.image}" alt="${escAttr(m.title)}">
+      <div class="feature-card-content">
+        <div class="feature-tag">${m.featureTag||''}</div>
+        <div class="feature-title">${m.title}</div>
+        <div class="feature-sub">${m.featureSub||''}</div>
+      </div>
+    </div>`).join('');
+  bindCursorTargets();
+}
+
+/* ============================================================
+   SEARCH
+   ============================================================ */
+const searchInput=document.getElementById('searchInput');
+const searchResults=document.getElementById('searchResults');
+let searchTimer=null;
+searchInput.addEventListener('input',(e)=>{
+  const q=e.target.value.trim();
+  clearTimeout(searchTimer);
+  if(!q){ searchResults.classList.remove('show'); return; }
+  searchTimer=setTimeout(()=>runSearch(q),200);
 });
+document.addEventListener('click',(e)=>{ if(!e.target.closest('.search-wrap')) searchResults.classList.remove('show'); });
+function runSearch(q){
+  const ql=q.toLowerCase();
+  const results=MOCK.movies.filter(m=>m.title.toLowerCase().includes(ql)||m.tags?.some(t=>t.toLowerCase().includes(ql)));
+  if(!results.length){
+    searchResults.innerHTML=`<div class="panel-empty">No titles found for "${escAttr(q)}"</div>`;
+  } else {
+    searchResults.innerHTML=results.map(m=>`
+      <div class="panel-item" onclick="selectResult('${m._id}','${escAttr(m.title)}')">
+        <img src="${m.image}" alt="${escAttr(m.title)}">
+        <div class="panel-item-text">${m.title}<div class="panel-item-sub">${m.year||''} ${m.rating?'· ⭐ '+m.rating:''}</div></div>
+      </div>`).join('');
+    bindCursorTargets();
+  }
+  searchResults.classList.add('show');
+}
+function selectResult(movieId,title){
+  searchResults.classList.remove('show');
+  searchInput.value='';
+  playMovie(movieId,title);
+}
+
+/* ============================================================
+   INIT — order matters: load session FIRST, then render profile
+   ============================================================ */
+function init(){
+  loadSessionUser();          // 1. pull name/email/initials from sessionStorage
+  renderProfileBar();         // 2. paint them into the navbar
+  updatePrimeButton();        // 3. prime badge
+
+  setupIconPanel('notifBtn','notifPanel', renderNotifications);
+  setupIconPanel('watchlistBtn','watchlistPanel', renderWatchlistPanel);
+
+  renderHero();
+  renderCategories();
+  renderCW();
+  renderFeatured();
+  renderSection('originals','orig');
+  renderSection('india','india');
+  renderSection('new','new');
+  renderNotifications();
+  renderWatchlistPanel();
+  bindCursorTargets();
+}
+init();
 </script>
 </body>
-</html> 
+</html>
